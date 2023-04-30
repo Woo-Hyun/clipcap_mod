@@ -41,8 +41,8 @@ def process_data(clip_model, preprocess, data, output_path, device):
             prefix = clip_model.encode_image(image).cpu()
             crop_prefix = clip_model.encode_image(crop_image).cpu()
         d["clip_embedding"] = clip_embedding # instead i
+        d["clip_crop_embedding"] = clip_embedding
         clip_embedding += 1
-        d["clip_crop_embedding"] = i
         d["image_id"] = i+1000
         all_embeddings.append(prefix)
         all_crop_embeddings.append(crop_prefix)

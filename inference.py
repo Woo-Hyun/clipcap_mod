@@ -264,7 +264,7 @@ elif pretrained_model == 'COCO':
     print("not good pretrained model, look var pretrained_model")
     exit()
 else:
-    model_path = "./drama_train/drama_prefix-063.pt"
+    model_path = "./drama_train/crop_2/drama_prefix-017.pt"
     #model_path = "./drama_train/coco_weights.pt"
 ############################################
 
@@ -286,7 +286,8 @@ model = model.to(device)
 
 use_beam_search = False #@param {type:"boolean"}  
 
-image = io.imread("./image_example/loki_021_image_0052.png")
+#image = io.imread("./image_example/frame_000503.png")
+image = io.imread("./image_example/loki_011_image_0070.png")
 pil_image = PIL.Image.fromarray(image)
 #pil_img = Image(filename=UPLOADED_FILE)
 #display(pil_image)
