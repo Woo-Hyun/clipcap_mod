@@ -316,14 +316,14 @@ class ClipCaptionDramaModel(nn.Module):
                 mask: Optional[torch.Tensor] = None,
                 labels: Optional[torch.Tensor] = None):
         embedding_text = self.gpt.transformer.wte(tokens)
-        prefix = torch.cat((prefix, crop_prefix), dim=0)
+        prefix = torch.cat((prefix, crop_prefix), dim=1)
         prefix_projections = self.clip_project(prefix).view(-1, self.prefix_length, self.gpt_embedding_size)
         embedding_cat = torch.cat((prefix_projections, embedding_text), dim=1)
         
         if labels is not None:
             dummy_token = self.get_dummy_token(tokens.shape[0], tokens.device)
             labels = torch.cat((dummy_token, tokens), dim=1)
-        mask = torch.cat((mask, mask), dim=0)
+        #mask = torch.cat((mask, mask), dim=0)
         out = self.gpt(inputs_embeds=embedding_cat, labels=labels, attention_mask=mask)
         return out
 
@@ -334,7 +334,7 @@ class ClipCaptionDramaModel(nn.Module):
         self.gpt = GPT2LMHeadModel.from_pretrained('gpt2')
         self.gpt_embedding_size = self.gpt.transformer.wte.weight.shape[1]
         if mapping_type == MappingType.MLP:
-            self.clip_project = MLP((prefix_size, (self.gpt_embedding_size * prefix_length) // 2,
+            self.clip_project = MLP((prefix_size*2, (self.gpt_embedding_size * prefix_length) // 2,
                                      self.gpt_embedding_size * prefix_length))
         else:
             self.clip_project = TransformerMapper(prefix_size, self.gpt_embedding_size, prefix_length,
@@ -407,7 +407,7 @@ def train_and_validate(train_dataset: ClipDramaDataset, val_dataset: ClipDramaDa
         for idx, (tokens, mask, prefix, crop_prefix) in enumerate(train_dataloader):
             model.zero_grad()
             tokens, mask, prefix, crop_prefix = tokens.to(device), mask.to(device), prefix.to(device, dtype=torch.float32), crop_prefix.to(device, dtype=torch.float32)
-            tokens = torch.cat((tokens, tokens), dim=0)
+            #tokens = torch.cat((tokens, tokens), dim=0)
             outputs = model(tokens, prefix, crop_prefix, mask)
             logits = outputs.logits[:, train_dataset.prefix_length - 1: -1]
             loss = nnf.cross_entropy(logits.reshape(-1, logits.shape[-1]), tokens.flatten(), ignore_index=0)
@@ -431,7 +431,7 @@ def train_and_validate(train_dataset: ClipDramaDataset, val_dataset: ClipDramaDa
         with torch.no_grad():
             for idx, (tokens, mask, prefix, crop_prefix) in enumerate(val_dataloader):
                 tokens, mask, prefix, crop_prefix= tokens.to(device), mask.to(device), prefix.to(device, dtype=torch.float32), crop_prefix.to(device, dtype=torch.float32)
-                tokens = torch.cat((tokens, tokens), dim=0)
+                #tokens = torch.cat((tokens, tokens), dim=0)
                 outputs = model(tokens, prefix, crop_prefix, mask)
                 logits = outputs.logits[:, val_dataset.prefix_length - 1: -1]
                 loss = nnf.cross_entropy(logits.reshape(-1, logits.shape[-1]), tokens.flatten(), ignore_index=0)
@@ -450,11 +450,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_train', default='./data/drama/woo_split_ViT-B_32_crop_train_2.pkl')
     parser.add_argument('--data_val', default='./data/drama/woo_split_ViT-B_32_crop_val_2.pkl')
-    parser.add_argument('--out_dir', default='./drama_train/crop_mlp/')
+    parser.add_argument('--out_dir', default='./drama_train/cat1/')
     parser.add_argument('--prefix', default='drama_prefix', help='prefix for saved filenames')
     parser.add_argument('--epochs', type=int, default=25)
     parser.add_argument('--save_every', type=int, default=1)
-    parser.add_argument('--prefix_length', type=int, default=20)
+    parser.add_argument('--prefix_length', type=int, default=10)
     parser.add_argument('--prefix_length_clip', type=int, default=10)
     parser.add_argument('--bs', type=int, default=40)
     parser.add_argument('--only_prefix', dest='only_prefix', action='store_true')

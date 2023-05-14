@@ -108,14 +108,14 @@ class ClipCaptionDramaModel(nn.Module):
                 mask: Optional[torch.Tensor] = None,
                 labels: Optional[torch.Tensor] = None):
         embedding_text = self.gpt.transformer.wte(tokens)
-        prefix = torch.cat((prefix, crop_prefix), dim=0)
+        prefix = torch.cat((prefix, crop_prefix), dim=1)
         prefix_projections = self.clip_project(prefix).view(-1, self.prefix_length, self.gpt_embedding_size)
         embedding_cat = torch.cat((prefix_projections, embedding_text), dim=1)
         
         if labels is not None:
             dummy_token = self.get_dummy_token(tokens.shape[0], tokens.device)
             labels = torch.cat((dummy_token, tokens), dim=1)
-        mask = torch.cat((mask, mask), dim=0)
+        #mask = torch.cat((mask, mask), dim=0)
         out = self.gpt(inputs_embeds=embedding_cat, labels=labels, attention_mask=mask)
         return out
 
@@ -124,7 +124,7 @@ class ClipCaptionDramaModel(nn.Module):
         self.prefix_length = prefix_length
         self.gpt = GPT2LMHeadModel.from_pretrained('gpt2')
         self.gpt_embedding_size = self.gpt.transformer.wte.weight.shape[1]
-        self.clip_project = MLP((prefix_size, (self.gpt_embedding_size * prefix_length) // 2,
+        self.clip_project = MLP((prefix_size*2, (self.gpt_embedding_size * prefix_length) // 2,
                                 self.gpt_embedding_size * prefix_length))
 
 def generate_beam(model, tokenizer, beam_size: int = 5, prompt=None, embed=None,
@@ -264,7 +264,7 @@ elif pretrained_model == 'COCO':
     print("not good pretrained model, look var pretrained_model")
     exit()
 else:
-    model_path = "./drama_train/crop_3/drama_prefix-021.pt"
+    model_path = "./drama_train/cat1/drama_prefix-017.pt"
     #model_path = "./drama_train/coco_weights.pt"
 ############################################
 
@@ -276,7 +276,7 @@ device = CUDA(0) if is_gpu else "cpu"
 clip_model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
-prefix_length = 20
+prefix_length = 10
 
 model = ClipCaptionDramaModel(prefix_length)
 
@@ -288,7 +288,7 @@ model = model.to(device)
 
 
 #image = io.imread("./image_example/frame_003169.png")
-image = io.imread("./image_example/loki_028_image_0100.png")
+image = io.imread("./image_example/loki_019_image_0066.png")
 pil_image = Image.fromarray(image)
 #pil_img = Image(filename=UPLOADED_FILE)
 #display(pil_image)
@@ -297,16 +297,17 @@ image = preprocess(pil_image).unsqueeze(0).to(device)
 
 ####### open loki json for crop bounding box #########
 if is_loki:
-    with open('./image_example/loki_028_label2d_0100.json', 'r') as f:
+    with open('./image_example/loki_019_label2d_0066.json', 'r') as f:
         json_data = json.load(f)
-    pos_min_x = json_data["Wheelchair"]["3ec5b671-8c9f-489b-a548-5dcff745441b"]["box"]["left"]
-    pos_min_y = json_data["Wheelchair"]["3ec5b671-8c9f-489b-a548-5dcff745441b"]["box"]["top"]
-    pos_max_x = pos_min_x + json_data["Wheelchair"]["3ec5b671-8c9f-489b-a548-5dcff745441b"]["box"]["width"]
-    pos_max_y = pos_min_y + json_data["Wheelchair"]["3ec5b671-8c9f-489b-a548-5dcff745441b"]["box"]["height"]
+    pos_min_x = json_data["Pedestrian"]["d503a55e-5d29-418f-852d-417723ffb5ac"]["box"]["left"]
+    pos_min_y = json_data["Pedestrian"]["d503a55e-5d29-418f-852d-417723ffb5ac"]["box"]["top"]
+    pos_max_x = pos_min_x + json_data["Pedestrian"]["d503a55e-5d29-418f-852d-417723ffb5ac"]["box"]["width"]
+    pos_max_y = pos_min_y + json_data["Pedestrian"]["d503a55e-5d29-418f-852d-417723ffb5ac"]["box"]["height"]
 
     crop_pil_image = pil_image.crop((pos_min_x, pos_min_y, pos_max_x, pos_max_y))
     crop_pil_image = preprocess(crop_pil_image).unsqueeze(0).to(device)
-    image = torch.cat((image, crop_pil_image), dim=0)
+    #image = torch.cat((image, crop_pil_image), dim=1)
+
 ######################################################
 
 with torch.no_grad():
@@ -315,7 +316,10 @@ with torch.no_grad():
     # else:
     prefix = clip_model.encode_image(image).to(device, dtype=torch.float32)
     if is_loki:
-        prefix_length = prefix_length * 2
+        crop_prefix = clip_model.encode_image(crop_pil_image).to(device, dtype=torch.float32)
+        prefix = torch.cat((prefix, crop_prefix), dim=1)
+    else:
+        prefix = torch.cat((prefix, prefix), dim=1)
     prefix_embed = model.clip_project(prefix).reshape(1, prefix_length, -1)
 if use_beam_search:
     generated_text_prefix = generate_beam(model, tokenizer, embed=prefix_embed)[0]

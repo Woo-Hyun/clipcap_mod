@@ -9,6 +9,7 @@ from tqdm import tqdm
 import argparse
 import torchvision.transforms.functional as func
 from sklearn.model_selection import train_test_split
+from IPython.display import display
 
 def process_data(clip_model, preprocess, data, output_path, device):
     print("%0d captions loaded from json " % len(data))
@@ -27,11 +28,10 @@ def process_data(clip_model, preprocess, data, output_path, device):
         crop_image = image
         image = preprocess(Image.fromarray(image)).unsqueeze(0).to(device)
 
-        if len(d["geometry"]) != 0 and d["geometry"][2][1] - d["geometry"][0][1] != 0 and d["geometry"][1][0] - d["geometry"][0][0] != 0:
+        if len(d["geometry"]) != 0 and d["geometry"][2][1] - d["geometry"][0][1] != 0 and d["geometry"][2][0] - d["geometry"][0][0] != 0:
             crop_image = Image.fromarray(crop_image)
-            crop_image = func.crop(crop_image, d["geometry"][0][1], d["geometry"][0][0],
-                                   d["geometry"][2][1] - d["geometry"][0][1],
-                                   d["geometry"][1][0] - d["geometry"][0][0])
+            crop_image = crop_image.crop((d["geometry"][0][0], d["geometry"][0][1],
+                                        d["geometry"][2][0], d["geometry"][2][1]))
             crop_image = preprocess(crop_image).unsqueeze(0).to(device)
         else:
             continue

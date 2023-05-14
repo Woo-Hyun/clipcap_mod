@@ -1,0 +1,162 @@
+{
+      "Car": {},
+      "Bus": {},
+      "Truck": {
+            "e227861f-cc5d-4258-899a-17fcb8620158": {
+                  "box": {
+                        "top": 592,
+                        "left": 1016,
+                        "height": 152,
+                        "width": 170
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            },
+            "9c8910e4-6528-40fd-aedd-05321a1b2908": {
+                  "box": {
+                        "top": 544.2326265739262,
+                        "left": 1041.6757647436987,
+                        "height": 167.55649615347198,
+                        "width": 98.61732072962069
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            }
+      },
+      "Van": {
+            "d26ef17d-18af-4bb7-890e-0c310ff18a98": {
+                  "box": {
+                        "top": 651,
+                        "left": 1003,
+                        "height": 30,
+                        "width": 29
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "Go forward"
+                        ],
+                        "relative_position": "l1"
+                  }
+            }
+      },
+      "Motorcyclist": {},
+      "Bicyclist": {
+            "f3493823-4a7e-4ba4-9b20-bd10a40c493e": {
+                  "box": {
+                        "top": 656,
+                        "left": 983,
+                        "height": 37,
+                        "width": 16
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "Go forward"
+                        ],
+                        "relative_position": "l1"
+                  }
+            }
+      },
+      "Pedestrian": {
+            "d503a55e-5d29-418f-852d-417723ffb5ac": {
+                  "box": {
+                        "top": 635,
+                        "left": 1007,
+                        "height": 187,
+                        "width": 67
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "age": "Adult",
+                        "gender": "Male"
+                  }
+            },
+            "02e938a2-1e3a-4199-badd-1906e076612f": {
+                  "box": {
+                        "top": 670,
+                        "left": 815,
+                        "height": 69,
+                        "width": 30
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "age": "Child",
+                        "gender": "Female"
+                  }
+            },
+            "6eb80c23-d296-4747-b665-b1d097fe3579": {
+                  "box": {
+                        "top": 662,
+                        "left": 672,
+                        "height": 136,
+                        "width": 45
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "age": "Adult",
+                        "gender": "Male"
+                  }
+            },
+            "db833f99-759f-44c1-8f98-3a1886e5f4aa": {
+                  "box": {
+                        "top": 658,
+                        "left": 910,
+                        "height": 49,
+                        "width": 26
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "age": "Adult",
+                        "gender": "Female"
+                  }
+            },
+            "cb4b0d3d-b021-4d7e-a292-c3902e505a59": {
+                  "box": {
+                        "top": 656,
+                        "left": 959,
+                        "height": 41,
+                        "width": 15
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "age": "Adult",
+                        "gender": "Male"
+                  }
+            }
+      },
+      "Wheelchair": {},
+      "Traffic_Sign": {},
+      "Traffic_Light": {},
+      "Potential_Destination": {},
+      "Road_Entrance_Exit": {
+            "68c8ff01-5612-4827-9898-023731f2fd03": {
+                  "box": {
+                        "top": 662.3885104340752,
+                        "left": 1044.8153633739291,
+                        "height": 17.70815821230906,
+                        "width": 20.454694618080566
+                  },
+                  "not_in_lidar": false
+            },
+            "9083abb1-7e14-4681-853f-68d0daf6f045": {
+                  "box": {
+                        "top": 1101.7147925999884,
+                        "left": 685.4405740797184,
+                        "height": 106.28520740001159,
+                        "width": 120.43256702100643
+                  },
+                  "not_in_lidar": false
+            }
+      }
+}

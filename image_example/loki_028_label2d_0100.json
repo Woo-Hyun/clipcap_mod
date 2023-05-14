@@ -1,0 +1,331 @@
+{
+      "Car": {
+            "b8a4be27-acfd-48d0-8676-c6965a094546": {
+                  "box": {
+                        "top": 659,
+                        "left": 1166,
+                        "height": 131,
+                        "width": 152
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            },
+            "5a9b72b7-0ac2-4207-b77f-a2536d9ecba8": {
+                  "box": {
+                        "top": 677,
+                        "left": 1720,
+                        "height": 192,
+                        "width": 200
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            },
+            "0a8771fd-656b-4462-8f4b-0a96aed3fc4c": {
+                  "box": {
+                        "top": 665,
+                        "left": 888,
+                        "height": 42,
+                        "width": 61
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "Go forward"
+                        ],
+                        "relative_position": "0"
+                  }
+            },
+            "4762d9d5-807d-42da-8c82-f3935d6da08a": {
+                  "box": {
+                        "top": 632,
+                        "left": 1613,
+                        "height": 137,
+                        "width": 184
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            },
+            "18629b37-3acc-485a-9906-353bbeff935a": {
+                  "box": {
+                        "top": 649,
+                        "left": 603.298614528992,
+                        "height": 98,
+                        "width": 181.70138547100802
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            },
+            "4c1a29bf-fed5-4803-9b20-7880f07fa3a3": {
+                  "box": {
+                        "top": 610,
+                        "left": 0,
+                        "height": 283,
+                        "width": 470
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            },
+            "9c83f290-26d2-494d-9953-9951096cd4d3": {
+                  "box": {
+                        "top": 660,
+                        "left": 963,
+                        "height": 39,
+                        "width": 85
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            }
+      },
+      "Bus": {},
+      "Truck": {
+            "01c535d1-2f18-4eb1-9fde-f4fbc0ead67a": {
+                  "box": {
+                        "top": 427,
+                        "left": 0,
+                        "height": 781,
+                        "width": 329
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            },
+            "9bd66518-f78f-454b-9d1c-309fadea0e28": {
+                  "box": {
+                        "top": 656,
+                        "left": 957,
+                        "height": 25,
+                        "width": 23
+                  },
+                  "not_in_lidar": true,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            },
+            "e2b94eec-e3fb-4e85-b2d6-081a98995669": {
+                  "box": {
+                        "top": 638,
+                        "left": 1058,
+                        "height": 60,
+                        "width": 182
+                  },
+                  "not_in_lidar": true,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            }
+      },
+      "Van": {},
+      "Motorcyclist": {},
+      "Bicyclist": {
+            "89becf40-840c-4c7e-a1ae-76abb911aaf5": {
+                  "box": {
+                        "top": 655,
+                        "left": 840,
+                        "height": 99,
+                        "width": 41.00762871544673
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "Go forward"
+                        ],
+                        "relative_position": "0"
+                  }
+            },
+            "184de1c8-a367-47a7-899d-af41ddeff18a": {
+                  "box": {
+                        "top": 864,
+                        "left": 1846,
+                        "height": 170,
+                        "width": 74
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "lane_information": [
+                              "None of the above"
+                        ],
+                        "relative_position": "None of the above"
+                  }
+            }
+      },
+      "Pedestrian": {
+            "30388f85-72c6-4c70-9fb3-297cd1aa9184": {
+                  "box": {
+                        "top": 651,
+                        "left": 656,
+                        "height": 174,
+                        "width": 70
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "age": "Adult",
+                        "gender": "Male"
+                  }
+            },
+            "7f158bff-55f4-48e4-9323-859d799f2253": {
+                  "box": {
+                        "top": 649,
+                        "left": 711,
+                        "height": 459,
+                        "width": 206
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "age": "Adult",
+                        "gender": "Female"
+                  }
+            },
+            "c04cfe28-9110-486e-b013-c2e35832f890": {
+                  "box": {
+                        "top": 676,
+                        "left": 1360,
+                        "height": 357,
+                        "width": 212
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "age": "Adult",
+                        "gender": "Female"
+                  }
+            }
+      },
+      "Wheelchair": {
+            "3ec5b671-8c9f-489b-a548-5dcff745441b": {
+                  "box": {
+                        "top": 807,
+                        "left": 1156,
+                        "height": 226.74545378127715,
+                        "width": 232.46368059626352
+                  },
+                  "not_in_lidar": false,
+                  "attributes": {
+                        "age": "Child",
+                        "gender": "Female"
+                  }
+            }
+      },
+      "Traffic_Sign": {
+            "76328562-9276-4638-9eb2-25f81f0046cf": {
+                  "box": {
+                        "top": 511,
+                        "left": 730,
+                        "height": 41,
+                        "width": 40
+                  },
+                  "not_in_lidar": true,
+                  "attributes": {
+                        "traffic_sign_type": "Do not enter for vehicle"
+                  }
+            },
+            "56874c2f-da54-4cb2-902a-fca1592b15f3": {
+                  "box": {
+                        "top": 488,
+                        "left": 917,
+                        "height": 41,
+                        "width": 68
+                  },
+                  "not_in_lidar": true,
+                  "attributes": {
+                        "traffic_sign_type": "Other"
+                  }
+            }
+      },
+      "Traffic_Light": {},
+      "Potential_Destination": {},
+      "Road_Entrance_Exit": {
+            "ce232b60-123d-43ad-86df-ef5b79516978": {
+                  "box": {
+                        "top": 658,
+                        "left": 1186,
+                        "height": 26,
+                        "width": 27
+                  },
+                  "not_in_lidar": false
+            },
+            "87562c27-4c41-4d4e-9a84-4cd3b32e61e6": {
+                  "box": {
+                        "top": 688.0547485351562,
+                        "left": 0,
+                        "height": 49.500566039332284,
+                        "width": 48.88326159947721
+                  },
+                  "not_in_lidar": false
+            },
+            "18151c5e-b9c9-4c5f-b93b-938c23b449a0": {
+                  "box": {
+                        "top": 823.437744140625,
+                        "left": 1870,
+                        "height": 50,
+                        "width": 50
+                  },
+                  "not_in_lidar": false
+            },
+            "276b3c5d-dffd-4ade-84b6-b9195bcf0845": {
+                  "box": {
+                        "top": 1108,
+                        "left": 1140,
+                        "height": 100,
+                        "width": 90
+                  },
+                  "not_in_lidar": false
+            },
+            "ac881743-cd5e-4cc9-a74f-3fdf2a27562c": {
+                  "box": {
+                        "top": 680,
+                        "left": 1870,
+                        "height": 50,
+                        "width": 50
+                  },
+                  "not_in_lidar": false
+            },
+            "9916b4db-27e3-4745-955c-4d83bb71f747": {
+                  "box": {
+                        "top": 780,
+                        "left": 0,
+                        "height": 50,
+                        "width": 49
+                  },
+                  "not_in_lidar": false
+            }
+      }
+}
