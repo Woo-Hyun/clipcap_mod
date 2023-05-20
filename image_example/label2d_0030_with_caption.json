@@ -1,0 +1,331 @@
+{
+	"Car": {
+		"48e6a5d9-6a6c-4d1b-82b5-b49637f77a85": {
+			"box": {
+				"top": 668,
+				"left": 857,
+				"height": 166,
+				"width": 212
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a white sedan slowing in the ego lane, in front of the ego car, because of traffic congestion ahead."
+		}
+	},
+	"Bus": {},
+	"Truck": {},
+	"Van": {
+		"634d01d8-1fc9-43e1-b7ec-cc2e7f78a5cf": {
+			"box": {
+				"top": 632,
+				"left": 860,
+				"height": 125,
+				"width": 111
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a white van stopped in the ego lane, in front of the ego car, because of a red traffic light."
+		},
+		"edc9ef0d-83cf-4c69-9535-1be45d328f92": {
+			"box": {
+				"top": 653,
+				"left": 929,
+				"height": 53,
+				"width": 50
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "0"
+			},
+			"caption": "There is a white sedan driving in the ego lane, away from the ego car."
+		}
+	},
+	"Motorcyclist": {},
+	"Bicyclist": {
+		"0c20e3e3-3ad3-4069-bb61-a21f0f9359e4": {
+			"box": {
+				"top": 665,
+				"left": 1388,
+				"height": 153,
+				"width": 65
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a cyclist wearing a black jacket, cycling in the middle of the road, away from the ego car."
+		},
+		"2d59805d-c968-4689-8e9e-46e09ea0be8e": {
+			"box": {
+				"top": 664,
+				"left": 1332,
+				"height": 137,
+				"width": 52
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a black scooter driving in the ego lane, away from the ego car."
+		},
+		"5017ea31-ffa3-4018-8167-1cad6161c1db": {
+			"box": {
+				"top": 655,
+				"left": 1514,
+				"height": 120,
+				"width": 113
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a red scooter parked on the left side of the road, because it is being unloaded."
+		}
+	},
+	"Pedestrian": {
+		"1b458fe1-350f-422d-81e5-e24e85b86b96": {
+			"box": {
+				"top": 643,
+				"left": 1583,
+				"height": 179,
+				"width": 60
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Senior",
+				"gender": "Male"
+			},
+			"caption": "There is a red traffic cone on the left side of the road."
+		},
+		"2691497d-939c-45b4-805b-3e98f7fc272f": {
+			"box": {
+				"top": 657,
+				"left": 1011,
+				"height": 82,
+				"width": 32
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Male",
+				"potential_destination": "4f016f60-a465-40bd-935c-2c29d50c5196"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"37180c80-2308-4f07-a755-764a3d918cb4": {
+			"box": {
+				"top": 658,
+				"left": 1087,
+				"height": 104,
+				"width": 39
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Female"
+			},
+			"caption": "There is a pedestrian wearing a black shirt and black pants, and walking on the left side of the road, towards the ego car."
+		},
+		"56d2eef1-5997-46b8-b6da-0cb3e9cd52ec": {
+			"box": {
+				"top": 664,
+				"left": 833,
+				"height": 80,
+				"width": 27
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Female"
+			},
+			"caption": "There is a cyclist wearing a black jacket and cycling on the left side of the road, away from the ego car."
+		},
+		"6d78d651-236c-46c9-99f5-1d1a92e5f7aa": {
+			"box": {
+				"top": 642,
+				"left": 411,
+				"height": 349,
+				"width": 155
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Male"
+			},
+			"caption": "There is a pedestrian wearing a purple coat, walking on the left side of the road, towards the ego car."
+		},
+		"82dd1fc6-730d-457b-bbd5-742dda9f01d5": {
+			"box": {
+				"top": 655,
+				"left": 856,
+				"height": 75,
+				"width": 20
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Male"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"3b9541b6-1bd9-4082-87fd-04c08d391417": {
+			"box": {
+				"top": 662,
+				"left": 986,
+				"height": 69,
+				"width": 31
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Female"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		}
+	},
+	"Wheelchair": {},
+	"Traffic_Sign": {
+		"5472b129-ca9a-4d02-a4cb-56d5127a93db": {
+			"box": {
+				"top": 443,
+				"left": 489,
+				"height": 67,
+				"width": 67
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"traffic_sign_type": "Left turn only"
+			},
+			"caption": "There is a directional sign on the left side of the road."
+		},
+		"430280ea-2008-43c0-8686-89bf3ae28b98": {
+			"box": {
+				"top": 447,
+				"left": 1584,
+				"height": 70,
+				"width": 73
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"traffic_sign_type": "Other"
+			},
+			"caption": "There is a traffic sign on the left side of the road."
+		},
+		"ce0ed1ca-ba1d-4118-a811-7cd0fe3e94bd": {
+			"box": {
+				"top": 501,
+				"left": 718,
+				"height": 23,
+				"width": 19
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"traffic_sign_type": "Other"
+			},
+			"caption": "There is a green traffic light in front of the ego car."
+		}
+	},
+	"Traffic_Light": {
+		"34ebab22-5e8c-4ae0-88c3-2aaf7aee383f": {
+			"box": {
+				"top": 429,
+				"left": 826,
+				"height": 22,
+				"width": 63
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"traffic_light_state": [
+					"Green round"
+				]
+			},
+			"caption": "There is a green traffic light in front of the ego car."
+		},
+		"e408110c-6164-497a-b889-4aaa4ea732bf": {
+			"box": {
+				"top": 403,
+				"left": 1227,
+				"height": 32,
+				"width": 25
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"traffic_light_state": [
+					"Not visible"
+				]
+			},
+			"caption": "There is a pedestrian wearing a white shirt and black pants, walking on the left side of the road, towards the ego car."
+		}
+	},
+	"Potential_Destination": {
+		"4f016f60-a465-40bd-935c-2c29d50c5196": {
+			"box": {
+				"top": 694.0250623112104,
+				"left": 1014.5706239345075,
+				"height": 32.685485853151704,
+				"width": 38.334663967480765
+			},
+			"not_in_lidar": true
+		}
+	},
+	"Road_Entrance_Exit": {
+		"2b5a6044-3a73-4c56-b35f-1216fa03ed8c": {
+			"box": {
+				"top": 1153.6679641605856,
+				"left": 1188.4493806220898,
+				"height": 54.3320358394144,
+				"width": 57.66976711045072
+			},
+			"not_in_lidar": false
+		},
+		"04385343-d0bf-427e-8a75-e0dbb01b0d3c": {
+			"box": {
+				"top": 714.5294799804688,
+				"left": 0,
+				"height": 81,
+				"width": 81
+			},
+			"not_in_lidar": true
+		},
+		"16fc2da9-5c8b-4e99-ab8e-a97b6c04bd95": {
+			"box": {
+				"top": 866.926555881284,
+				"left": 1874.602069198633,
+				"height": 42.67323659918475,
+				"width": 45.39793080136701
+			},
+			"not_in_lidar": false
+		},
+		"b5289232-9952-4ae5-a859-6de5cbd2b3ec": {
+			"box": {
+				"top": 627.2468872070312,
+				"left": 943.3701171875,
+				"height": 54,
+				"width": 66
+			},
+			"not_in_lidar": true
+		}
+	}
+}

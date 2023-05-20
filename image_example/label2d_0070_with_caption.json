@@ -1,0 +1,536 @@
+{
+	"Car": {
+		"a191b6dc-e53b-4d5e-af84-acb69009eba1": {
+			"box": {
+				"top": 632,
+				"left": 1669,
+				"height": 162,
+				"width": 247
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "o2"
+			},
+			"caption": "There is a black hatchback stopped in the left lane, because it is waiting to turn right."
+		},
+		"3a4dce0a-fdc3-452a-901c-bb746ebf33ca": {
+			"box": {
+				"top": 650,
+				"left": 1488,
+				"height": 83,
+				"width": 122
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "o3"
+			},
+			"caption": "There is a white truck driving in the ego lane, away from the ego car."
+		},
+		"fdb61a72-6b8f-4ae7-afe3-e0da8aee0787": {
+			"box": {
+				"top": 657,
+				"left": 1146,
+				"height": 43,
+				"width": 66
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "o2"
+			},
+			"caption": "There is a white hatchback driving in the ego lane, away from the ego car, because of a green traffic light."
+		},
+		"a4b4dc6c-45ac-40cb-b5ca-e6399cfc7a68": {
+			"box": {
+				"top": 657,
+				"left": 852,
+				"height": 24,
+				"width": 22
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "0"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"49257722-abee-45ba-8ba5-4dfa25bf6e8f": {
+			"box": {
+				"top": 657,
+				"left": 1319,
+				"height": 97,
+				"width": 171
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"U turn"
+				],
+				"relative_position": "o1"
+			},
+			"caption": "There is a silver van driving in the middle of the intersection, away from the ego car."
+		},
+		"0ffae80f-158d-4847-b988-705a830ac27d": {
+			"box": {
+				"top": 659,
+				"left": 807,
+				"height": 16,
+				"width": 16
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "0"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"2f8e160d-10cd-474f-83eb-e1d3e10f7a48": {
+			"box": {
+				"top": 658,
+				"left": 790,
+				"height": 24,
+				"width": 22
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"1e5fc0da-503b-40c2-9a4b-d24e07d43730": {
+			"box": {
+				"top": 661,
+				"left": 775,
+				"height": 26,
+				"width": 24
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		}
+	},
+	"Bus": {},
+	"Truck": {
+		"f447f32f-3a44-43bd-866b-82c61653f696": {
+			"box": {
+				"top": 475,
+				"left": 0,
+				"height": 733,
+				"width": 233
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "l1"
+			},
+			"caption": "There is a red bus slowing down in the ego lane, because of traffic congestion ahead."
+		},
+		"a868f390-e533-48c3-be9b-288f650fd005": {
+			"box": {
+				"top": 606,
+				"left": 1190,
+				"height": 84,
+				"width": 103
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "o3"
+			},
+			"caption": "There is a white van driving in the ego lane, away from the ego car, because of a green traffic light."
+		},
+		"fa8a8f94-ad12-4442-b09a-0c867dca7da6": {
+			"box": {
+				"top": 630,
+				"left": 887,
+				"height": 45,
+				"width": 40
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "r1"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"d12f7df4-7d7b-4c9c-a7a9-da4eb9946db1": {
+			"box": {
+				"top": 645,
+				"left": 833,
+				"height": 34,
+				"width": 23
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "0"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"04ce38be-f300-4489-b714-c2fcf22d8273": {
+			"box": {
+				"top": 534.2414125110427,
+				"left": 1603.5704457160073,
+				"height": 240.60161026893445,
+				"width": 316.42955428399273
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "o3"
+			},
+			"caption": "There is a white van parked on the left side of the road, because it is being unloaded."
+		},
+		"ce93c92b-d481-47bf-a08a-4bc7e19b2259": {
+			"box": {
+				"top": 656,
+				"left": 815,
+				"height": 21,
+				"width": 21
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "0"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"a5970a11-e5c1-4565-9c83-5664c4e0b028": {
+			"box": {
+				"top": 617,
+				"left": 712,
+				"height": 87,
+				"width": 65
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a white truck driving in the ego lane, away from the ego car."
+		},
+		"b899d07a-e1c8-40f8-ba71-1142a5517b85": {
+			"box": {
+				"top": 641.5,
+				"left": 692.5,
+				"height": 67.5,
+				"width": 51.5
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a silver truck driving in the ego lane, away from the ego car."
+		}
+	},
+	"Van": {
+		"1f5a3cc0-fde4-4fc9-95df-e5c4a01da5e1": {
+			"box": {
+				"top": 646,
+				"left": 895,
+				"height": 66,
+				"width": 54
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "0"
+			},
+			"caption": "There is a pedestrian wearing a red jacket and crossing the street, from the left side to the right side, ahead at the crosswalk."
+		},
+		"a7fe7812-0e4a-4d20-a696-bd1316bf5b6d": {
+			"box": {
+				"top": 630,
+				"left": 232,
+				"height": 198,
+				"width": 294
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a black SUV driving in the right lane, towards the ego car."
+		},
+		"f038c9d8-fd10-4950-9591-ce243287d8a9": {
+			"box": {
+				"top": 612,
+				"left": 1100,
+				"height": 163,
+				"width": 325
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"None of the above"
+				],
+				"relative_position": "None of the above"
+			},
+			"caption": "There is a white van driving in the middle of the intersection, away from the ego car."
+		},
+		"9b45661a-6265-4090-a24d-75408132a9d7": {
+			"box": {
+				"top": 630,
+				"left": 1426,
+				"height": 117,
+				"width": 171
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "o2"
+			},
+			"caption": "There is a silver sedan driving in the middle of the intersection, towards the ego car."
+		},
+		"6b15cab7-0acc-43b0-b59a-4fc88835036a": {
+			"box": {
+				"top": 649,
+				"left": 1122,
+				"height": 41,
+				"width": 46
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "o3"
+			},
+			"caption": "There is a red sedan driving in the ego lane, away from the ego car, because of a green traffic light."
+		},
+		"af16ac85-43ff-45b3-b109-b6f0dd877818": {
+			"box": {
+				"top": 657,
+				"left": 1044,
+				"height": 19,
+				"width": 22
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "o3"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"51d04c46-a157-4a8e-b6d2-7cc0e24284bd": {
+			"box": {
+				"top": 642,
+				"left": 1378,
+				"height": 81,
+				"width": 123
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "o3"
+			},
+			"caption": "There is a silver sedan driving in the ego lane, away from the ego car, because of a green traffic light."
+		}
+	},
+	"Motorcyclist": {
+		"613a4e6b-cb7a-444b-97df-fa69b3648df9": {
+			"box": {
+				"top": 651,
+				"left": 1052,
+				"height": 70,
+				"width": 31
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"lane_information": [
+					"Go forward"
+				],
+				"relative_position": "r1"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		}
+	},
+	"Bicyclist": {},
+	"Pedestrian": {
+		"ccd9ca7f-d6cd-4aef-85a8-c8c88dc7f59f": {
+			"box": {
+				"top": 643,
+				"left": 868,
+				"height": 246,
+				"width": 86
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Female"
+			},
+			"caption": "There is a pedestrian wearing a hat, carrying a handbag, and crossing the street, from the left side to the right side, ahead at the crosswalk."
+		},
+		"bd0a4138-086a-4ffe-9a9c-cf3b759fea9c": {
+			"box": {
+				"top": 608,
+				"left": 1619,
+				"height": 318,
+				"width": 150
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Male"
+			},
+			"caption": "There is a pedestrian wearing a black jacket, carrying a backpack, and crossing the street, from the left side to the right side, ahead at the crosswalk."
+		},
+		"7796169b-aed1-4cfd-9307-11f7a2a2490a": {
+			"box": {
+				"top": 657,
+				"left": 551,
+				"height": 74,
+				"width": 26
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Male"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"62aae7ff-c6a6-4556-b577-b7fe0bbd89b2": {
+			"box": {
+				"top": 661,
+				"left": 677,
+				"height": 38,
+				"width": 15
+			},
+			"not_in_lidar": false,
+			"attributes": {
+				"age": "Adult",
+				"gender": "Female"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		}
+	},
+	"Wheelchair": {},
+	"Traffic_Sign": {
+		"f4a9dd68-67f1-45cb-88de-80b6aacc0cc3": {
+			"box": {
+				"top": 453,
+				"left": 1538,
+				"height": 64,
+				"width": 65
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"traffic_sign_type": "Slow downNo U turn"
+			},
+			"caption": "There is a traffic sign on the left side of the road."
+		},
+		"322568e7-bc47-4420-925f-678218c75964": {
+			"box": {
+				"top": 212,
+				"left": 0,
+				"height": 69,
+				"width": 25
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"traffic_sign_type": "Other"
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		}
+	},
+	"Traffic_Light": {
+		"1f81a0fd-2d63-45de-b5a3-bdd88f6e7f6f": {
+			"box": {
+				"top": 85,
+				"left": 331,
+				"height": 57,
+				"width": 150
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"traffic_light_state": [
+					"Red round"
+				]
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		},
+		"b8ef0833-fcc5-499f-ac12-a58749509a01": {
+			"box": {
+				"top": 103.48620690788763,
+				"left": 365.3162218304551,
+				"height": 68.24902150509021,
+				"width": 135.24454959122704
+			},
+			"not_in_lidar": true,
+			"attributes": {
+				"traffic_light_state": [
+					"Not visible"
+				]
+			},
+			"caption": "There is a red traffic light in front of the ego car."
+		}
+	},
+	"Potential_Destination": {},
+	"Road_Entrance_Exit": {
+		"5ac3c422-b318-479e-ae27-37fc9b69b5db": {
+			"box": {
+				"top": 624.3524780273438,
+				"left": 812.92724609375,
+				"height": 43.81035827932567,
+				"width": 46.65499039878466
+			},
+			"not_in_lidar": false
+		},
+		"1ad17d94-ca85-48f6-8949-d8cddf555b29": {
+			"box": {
+				"top": 849.1468505859375,
+				"left": 1844.1508759494916,
+				"height": 71.76328367709641,
+				"width": 75.84912405050841
+			},
+			"not_in_lidar": true
+		}
+	}
+}
