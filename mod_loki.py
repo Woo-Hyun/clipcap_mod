@@ -13,6 +13,7 @@ import skimage.io as io
 from PIL import Image
 import json
 import time
+import re
 
 def generate2(
         model,
@@ -95,10 +96,12 @@ class ClipCaptionDramaModel(nn.Module):
     def get_dummy_token(self, batch_size: int, device: torch.device) -> torch.Tensor:
         return torch.zeros(batch_size, self.prefix_length, dtype=torch.int64, device=device)
 
-    def forward(self, tokens: torch.Tensor, prefix: torch.Tensor, crop_prefix: torch.Tensor,
+    def forward(self, tokens: torch.Tensor, prefix: torch.Tensor, 
+                crop_prefix: torch.Tensor, bbox: torch.Tensor,
                 mask: Optional[torch.Tensor] = None,
                 labels: Optional[torch.Tensor] = None):
         embedding_text = self.gpt.transformer.wte(tokens)
+        crop_prefix = torch.cat((crop_prefix, bbox), dim=1)
         prefix = torch.cat((prefix, crop_prefix), dim=1)
         prefix_projections = self.clip_project(prefix).view(-1, self.prefix_length, self.gpt_embedding_size)
         embedding_cat = torch.cat((prefix_projections, embedding_text), dim=1)
@@ -110,19 +113,20 @@ class ClipCaptionDramaModel(nn.Module):
         out = self.gpt(inputs_embeds=embedding_cat, labels=labels, attention_mask=mask)
         return out
 
-    def __init__(self, prefix_length: int, prefix_size: int = 512):
+    def __init__(self, prefix_length: int, clip_length: Optional[int] = None, prefix_size: int = 512,
+                 num_layers: int = 8):
         super(ClipCaptionDramaModel, self).__init__()
         self.prefix_length = prefix_length
         self.gpt = GPT2LMHeadModel.from_pretrained('gpt2')
         self.gpt_embedding_size = self.gpt.transformer.wte.weight.shape[1]
-        self.clip_project = MLP((prefix_size*2, (self.gpt_embedding_size * prefix_length) // 2,
-                                self.gpt_embedding_size * prefix_length))
+        self.clip_project = MLP((prefix_size * 2 + 6, (self.gpt_embedding_size * prefix_length) // 2,
+                                 self.gpt_embedding_size * prefix_length))
 
 
 def main(loki_dir: str):
     ##### load model #####
 
-    model_path = "./drama_train/cat1/drama_prefix-017.pt"
+    model_path = "./drama_train/flip_bbox_center_norm/drama_prefix-009.pt"
     
     is_gpu = True #@param {type:"boolean"}
     use_beam_search = False #@param {type:"boolean"}
@@ -153,14 +157,31 @@ def main(loki_dir: str):
                     categories = ["Car", "Bus", "Truck", "Van", "Motorcyclist", "Bicyclist", "Pedestrian", "Wheelchair", "Traffic_Sign", "Traffic_Light"]
                     for category in categories:
                         for item in json_data[category]:
-                            image = io.imread(root + '/image_' + name[-4:] + '.png')
+
+                            filename = root + '/image_' + name[-4:] + '.png'
+                            if not os.path.isfile(filename):
+                                print("there is no img")
+                                print(filename)
+                                continue
+
+                            image = io.imread(filename)
                             pil_image = Image.fromarray(image)
+                            w, h = pil_image.size
                             image = preprocess(pil_image).unsqueeze(0).to(device)
+
+                            if json_data[category][item]["box"]["width"] < 100 and json_data[category][item]["box"]["height"] < 100:
+                                continue
 
                             pos_min_x = json_data[category][item]["box"]["left"]
                             pos_min_y = json_data[category][item]["box"]["top"]
                             pos_max_x = pos_min_x + json_data[category][item]["box"]["width"]
                             pos_max_y = pos_min_y + json_data[category][item]["box"]["height"]
+                            bbox = [pos_min_x, pos_min_y, 
+                                    pos_max_x, pos_max_y,
+                                    (pos_min_x+pos_max_x)/2, 
+                                    (pos_min_y+pos_max_y)/2]
+                            bbox = [coord / w if i % 2 == 0 else coord / h for i, coord in enumerate(bbox)]
+                            bbox = torch.tensor(bbox).unsqueeze(0).to(device)
                             
                             crop_pil_image = pil_image.crop((pos_min_x, pos_min_y, pos_max_x, pos_max_y))
                             crop_pil_image = preprocess(crop_pil_image).unsqueeze(0).to(device)
@@ -168,6 +189,7 @@ def main(loki_dir: str):
                             with torch.no_grad():
                                 prefix = clip_model.encode_image(image).to(device, dtype=torch.float32)
                                 crop_prefix = clip_model.encode_image(crop_pil_image).to(device, dtype=torch.float32)
+                                crop_prefix = torch.cat((crop_prefix, bbox), dim=1)
                                 prefix = torch.cat((prefix, crop_prefix), dim=1)
                                 prefix_embed = model.clip_project(prefix).reshape(1, prefix_length, -1)
 
@@ -180,6 +202,6 @@ def main(loki_dir: str):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--loki_dir', default="../loki_data")
+    parser.add_argument('--loki_dir', default="../loki_data/")
     args = parser.parse_args()
     exit(main(args.loki_dir))

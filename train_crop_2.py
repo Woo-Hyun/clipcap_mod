@@ -10,6 +10,8 @@ import pickle
 import sys
 import argparse
 import json
+import skimage.io as io
+from PIL import Image
 from typing import Tuple, Optional, Union
 
 
@@ -100,10 +102,16 @@ class ClipDramaDataset(Dataset):
         tokens, mask = self.pad_tokens(item)
         prefix = self.prefixes[self.caption2embedding[item]]
         crop_prefix = self.crop_prefixes[self.caption2crop[item]]
+        prev_prefix = self.prev_prefixes[self.caption2embedding[item]]
+        bbox = self.geometries[self.caption2crop[item]]
+        w = self.img_width[self.caption2embedding[item]]
+        h = self.img_height[self.caption2embedding[item]]
+        bbox = [coord / w if i % 2 == 0 else coord / h for i, coord in enumerate(bbox)]
+        bbox = torch.tensor(bbox)
         if self.normalize_prefix:
             prefix = prefix.float()
             prefix = prefix / prefix.norm(2, -1)
-        return tokens, mask, prefix, crop_prefix
+        return tokens, mask, prefix, crop_prefix, prev_prefix, bbox
 
     def __init__(self, data_path: str,  prefix_length: int, gpt2_type: str = "gpt2",
                  normalize_prefix=False):
@@ -116,27 +124,54 @@ class ClipDramaDataset(Dataset):
         sys.stdout.flush()
         self.prefixes = all_data["clip_embedding"]
         self.crop_prefixes = all_data["clip_crop_embedding"]
+        self.prev_prefixes = all_data["clip_prev_embedding"]
         captions_raw = all_data["captions"]
         self.image_ids = [caption["image_id"] for caption in captions_raw]
         self.captions = [caption['caption'] for caption in captions_raw]
+        self.geometries = [[caption["geometry"][0][0], caption["geometry"][0][1],
+                            caption["geometry"][2][0], caption["geometry"][2][1],
+                            (caption["geometry"][0][0]+caption["geometry"][2][0])/2,
+                            (caption["geometry"][0][1]+caption["geometry"][2][1])/2] 
+                            for caption in captions_raw]
+        self.img_width = [caption["img_w"] for caption in captions_raw]
+        self.img_height = [caption["img_h"] for caption in captions_raw]
+        
         if os.path.isfile(f"{data_path[:-4]}_tokens.pkl"):
             with open(f"{data_path[:-4]}_tokens.pkl", 'rb') as f:
-                self.captions_tokens, self.caption2embedding, self.caption2crop, self.max_seq_len = pickle.load(f)
+                self.captions_tokens, self.caption2embedding, self.caption2crop, self.caption2prev, self.max_seq_len = pickle.load(f)
         else:
             self.captions_tokens = []
             self.caption2embedding = []
             self.caption2crop = []
+            self.caption2prev = []
             max_seq_len = 0
             for caption in captions_raw:
+                # caption_tensor = torch.tensor(self.tokenizer.encode(caption['caption']), dtype=torch.int64)
+                # agent_classifier_tensor = torch.tensor(self.tokenizer.encode(caption['Agent-classifier']), dtype=torch.int64)
+                # self.captions_tokens.append(torch.cat((caption_tensor, agent_classifier_tensor), dim=0))
                 self.captions_tokens.append(torch.tensor(self.tokenizer.encode(caption['caption']), dtype=torch.int64))
                 self.caption2embedding.append(caption["clip_embedding"])
                 self.caption2crop.append(caption["clip_crop_embedding"])
+                self.caption2prev.append(caption["clip_prev_embedding"])
                 max_seq_len = max(max_seq_len, self.captions_tokens[-1].shape[0])
             # self.max_seq_len = max_seq_len
             with open(f"{data_path[:-4]}_tokens.pkl", 'wb') as f:
-                pickle.dump([self.captions_tokens, self.caption2embedding, self.caption2crop, max_seq_len], f)
+                pickle.dump([self.captions_tokens, self.caption2embedding, self.caption2crop, self.caption2prev, max_seq_len], f)
         all_len = torch.tensor([len(self.captions_tokens[i]) for i in range(len(self))]).float()
         self.max_seq_len = min(int(all_len.mean() + all_len.std() * 10), int(all_len.max()))
+
+class BBoxMLP(nn.Module):
+    def __init__(self, input_dim=4, hidden_dim=16, output_dim=64):
+        super(BBoxMLP, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, output_dim)
+        self.relu = nn.ReLU()
+        
+    def forward(self, x):
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        return x
 
 class MLP(nn.Module):
 
@@ -312,11 +347,14 @@ class ClipCaptionDramaModel(nn.Module):
     def get_dummy_token(self, batch_size: int, device: torch.device) -> torch.Tensor:
         return torch.zeros(batch_size, self.prefix_length, dtype=torch.int64, device=device)
 
-    def forward(self, tokens: torch.Tensor, prefix: torch.Tensor, crop_prefix: torch.Tensor,
+    def forward(self, tokens: torch.Tensor, prefix: torch.Tensor, 
+                crop_prefix: torch.Tensor, prev_prefix: torch.Tensor, bbox: torch.Tensor,
                 mask: Optional[torch.Tensor] = None,
                 labels: Optional[torch.Tensor] = None):
         embedding_text = self.gpt.transformer.wte(tokens)
+        crop_prefix = torch.cat((crop_prefix, bbox), dim=1)
         prefix = torch.cat((prefix, crop_prefix), dim=1)
+        prefix = torch.cat((prev_prefix, prefix), dim=1)
         prefix_projections = self.clip_project(prefix).view(-1, self.prefix_length, self.gpt_embedding_size)
         embedding_cat = torch.cat((prefix_projections, embedding_text), dim=1)
         
@@ -334,7 +372,7 @@ class ClipCaptionDramaModel(nn.Module):
         self.gpt = GPT2LMHeadModel.from_pretrained('gpt2')
         self.gpt_embedding_size = self.gpt.transformer.wte.weight.shape[1]
         if mapping_type == MappingType.MLP:
-            self.clip_project = MLP((prefix_size*2, (self.gpt_embedding_size * prefix_length) // 2,
+            self.clip_project = MLP((prefix_size * 3 + 6, (self.gpt_embedding_size * prefix_length) // 2,
                                      self.gpt_embedding_size * prefix_length))
         else:
             self.clip_project = TransformerMapper(prefix_size, self.gpt_embedding_size, prefix_length,
@@ -404,11 +442,11 @@ def train_and_validate(train_dataset: ClipDramaDataset, val_dataset: ClipDramaDa
         print(f">>> Training epoch {epoch}")
         sys.stdout.flush()
         progress = tqdm(total=len(train_dataloader), desc=output_prefix)
-        for idx, (tokens, mask, prefix, crop_prefix) in enumerate(train_dataloader):
+        for idx, (tokens, mask, prefix, crop_prefix, prev_prefix, bbox) in enumerate(train_dataloader):
             model.zero_grad()
-            tokens, mask, prefix, crop_prefix = tokens.to(device), mask.to(device), prefix.to(device, dtype=torch.float32), crop_prefix.to(device, dtype=torch.float32)
+            tokens, mask, prefix, crop_prefix, prev_prefix, bbox = tokens.to(device), mask.to(device), prefix.to(device, dtype=torch.float32), crop_prefix.to(device, dtype=torch.float32), prev_prefix.to(device, dtype=torch.float32), bbox.to(device)
             #tokens = torch.cat((tokens, tokens), dim=0)
-            outputs = model(tokens, prefix, crop_prefix, mask)
+            outputs = model(tokens, prefix, crop_prefix, prev_prefix, bbox, mask)
             logits = outputs.logits[:, train_dataset.prefix_length - 1: -1]
             loss = nnf.cross_entropy(logits.reshape(-1, logits.shape[-1]), tokens.flatten(), ignore_index=0)
             loss.backward()
@@ -429,10 +467,10 @@ def train_and_validate(train_dataset: ClipDramaDataset, val_dataset: ClipDramaDa
         print(f">>> Validating epoch {epoch}")
         sys.stdout.flush()
         with torch.no_grad():
-            for idx, (tokens, mask, prefix, crop_prefix) in enumerate(val_dataloader):
-                tokens, mask, prefix, crop_prefix= tokens.to(device), mask.to(device), prefix.to(device, dtype=torch.float32), crop_prefix.to(device, dtype=torch.float32)
+            for idx, (tokens, mask, prefix, crop_prefix, prev_prefix, bbox) in enumerate(val_dataloader):
+                tokens, mask, prefix, crop_prefix, prev_prefix, bbox = tokens.to(device), mask.to(device), prefix.to(device, dtype=torch.float32), crop_prefix.to(device, dtype=torch.float32), prev_prefix.to(device, dtype=torch.float32),bbox.to(device)
                 #tokens = torch.cat((tokens, tokens), dim=0)
-                outputs = model(tokens, prefix, crop_prefix, mask)
+                outputs = model(tokens, prefix, crop_prefix, prev_prefix, bbox, mask)
                 logits = outputs.logits[:, val_dataset.prefix_length - 1: -1]
                 loss = nnf.cross_entropy(logits.reshape(-1, logits.shape[-1]), tokens.flatten(), ignore_index=0)
                 val_loss += loss.item()
@@ -448,9 +486,9 @@ def train_and_validate(train_dataset: ClipDramaDataset, val_dataset: ClipDramaDa
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_train', default='./data/drama/woo_split_ViT-B_32_crop_train_2.pkl')
-    parser.add_argument('--data_val', default='./data/drama/woo_split_ViT-B_32_crop_val_2.pkl')
-    parser.add_argument('--out_dir', default='./drama_train/cat1/')
+    parser.add_argument('--data_train', default='./data/drama/woo_split_crop_flip_100_wh_prev_train.pkl')
+    parser.add_argument('--data_val', default='./data/drama/woo_split_crop_flip_100_wh_prev_val.pkl')
+    parser.add_argument('--out_dir', default='./drama_train/flip_bbox_all_norm/')
     parser.add_argument('--prefix', default='drama_prefix', help='prefix for saved filenames')
     parser.add_argument('--epochs', type=int, default=25)
     parser.add_argument('--save_every', type=int, default=1)
