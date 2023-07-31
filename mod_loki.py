@@ -14,6 +14,13 @@ from PIL import Image
 import json
 import time
 import re
+from torchvision.transforms import ToPILImage
+from PIL import ImageOps
+
+def denormalize(tensor, mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711]):
+    mean = torch.Tensor(mean).unsqueeze(1).unsqueeze(2).to(tensor.device)
+    std = torch.Tensor(std).unsqueeze(1).unsqueeze(2).to(tensor.device)
+    return tensor * std + mean
 
 def generate2(
         model,
@@ -167,7 +174,30 @@ def main(loki_dir: str):
                             image = io.imread(filename)
                             pil_image = Image.fromarray(image)
                             w, h = pil_image.size
-                            image = preprocess(pil_image).unsqueeze(0).to(device)
+
+                            ###############
+                            # 너비와 높이 중 더 긴 변의 길이를 찾습니다.
+                            max_side = max(w, h)
+
+                            # 패딩을 계산합니다.
+                            left_padding = (max_side - w) // 2
+                            right_padding = max_side - w - left_padding
+                            top_padding = (max_side - h) // 2
+                            bottom_padding = max_side - h - top_padding
+
+                            # 패딩을 적용합니다.
+                            padded_image = ImageOps.expand(pil_image, (left_padding, top_padding, right_padding, bottom_padding), fill=(0,0,0))
+
+                            #image = preprocess(pil_image).unsqueeze(0).to(device)
+                            image = preprocess(padded_image).unsqueeze(0).to(device)
+                            image = denormalize(image)
+                            to_pil = ToPILImage()
+                            saved_image = to_pil(image.squeeze(0).cpu())
+                            saved_image_path = "./example_de.png"
+                            saved_image.save(saved_image_path)
+
+                            exit()
+                            ######################
 
                             if json_data[category][item]["box"]["width"] < 100 and json_data[category][item]["box"]["height"] < 100:
                                 continue
@@ -202,6 +232,6 @@ def main(loki_dir: str):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--loki_dir', default="../loki_data/")
+    parser.add_argument('--loki_dir', default="./image_example/")
     args = parser.parse_args()
     exit(main(args.loki_dir))
